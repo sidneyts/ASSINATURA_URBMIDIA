@@ -86,13 +86,15 @@
             -moz-appearance: none;
         }
 
-        /* Corrige o fundo branco do autofill em navegadores WebKit (Chrome, Safari) */
+        /* Corrige o fundo do autofill em navegadores WebKit (Chrome, Safari) */
         input:-webkit-autofill,
         input:-webkit-autofill:hover,
         input:-webkit-autofill:focus,
         input:-webkit-autofill:active {
             -webkit-box-shadow: 0 0 0 30px var(--bg-color) inset !important;
             -webkit-text-fill-color: var(--text-color) !important;
+            transition: background-color 5000s ease-in-out 0s;
+            /* Previne a mudança de cor do autofill */
         }
 
         select {
@@ -101,8 +103,8 @@
             background-position: right 5px center;
             padding-right: 20px;
         }
-        
-        /* Estilização do dropdown para tema escuro */
+
+        /* Estilização do dropdown para tema escuro e claro */
         select option {
             background: var(--bg-color);
             color: var(--text-color);
@@ -162,17 +164,16 @@
             margin-top: 20px;
         }
 
-        /* Tema Claro */
+        /* TEMA CLARO CORRIGIDO */
         @media (prefers-color-scheme: light) {
             :root {
-                --bg-color: #f0f0f0;
-                --text-color: #1e1e1e;
-                --border-color: #cccccc;
-                --label-color: #555;
+                --bg-color: #ffffff;
+                --text-color: #212529;
+                --border-color: #ced4da;
+                --label-color: #6c757d;
             }
-            .logo {
-                filter: invert(1);
-            }
+
+            /* A logo não é mais alterada */
         }
     </style>
 </head>
@@ -194,11 +195,13 @@
                 </div>
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" placeholder="seueemail@urbmidia.com.br" required pattern=".+@urbmidia\.com\.br$" title="O e-mail deve terminar com @urbmidia.com.br">
+                    <input type="email" id="email" name="email" placeholder="seueemail@urbmidia.com.br" required
+                        pattern=".+@urbmidia\.com\.br$" title="O e-mail deve terminar com @urbmidia.com.br">
                 </div>
                 <div class="form-group">
                     <label for="telefone">Telefone</label>
-                    <input type="tel" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX" required oninput="this.value = this.value.replace(/[^0-9() \-]/g, '')">
+                    <input type="tel" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX" required
+                        oninput="this.value = this.value.replace(/[^0-9() \-]/g, '')">
                 </div>
                 <div class="form-group">
                     <label for="escritorio">Escritório</label>
@@ -263,7 +266,7 @@
             event.preventDefault();
 
             const emailInput = document.getElementById('email');
-            
+
             // Validação do e-mail
             if (!emailInput.value.toLowerCase().endsWith('@urbmidia.com.br')) {
                 statusMessage.textContent = 'O e-mail deve terminar com @urbmidia.com.br';
