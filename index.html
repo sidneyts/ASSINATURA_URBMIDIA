@@ -285,11 +285,10 @@
                 // E-MAIL
                 ctx.fillText(email, 460, 70);
 
-                // ENDEREÇO (cor corrigida para azul escuro para ter contraste)
+                // ENDEREÇO
                 ctx.fillStyle = '#ffffff';
                 ctx.font = "normal 16px 'Agrandir'";
-                // Desenha o endereço na posição correta, aplicando a escala também na altura da linha
-                drawMultilineText(endereco, 460, 240);
+                drawMultilineText(endereco, 460, 140);
 
                 // Converte o canvas para uma imagem e mostra o resultado
                 const finalImageURL = canvas.toDataURL('image/png');
