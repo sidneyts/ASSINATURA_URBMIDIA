@@ -38,7 +38,6 @@
 
         .container {
             width: 100%;
-            /* Aumentado o tamanho máximo do container */
             max-width: 600px;
             text-align: center;
         }
@@ -81,7 +80,6 @@
             padding: 25px 0 8px 0;
             outline: none;
             appearance: none;
-            /* Remove a aparência padrão do select */
             -webkit-appearance: none;
             -moz-appearance: none;
         }
@@ -131,7 +129,6 @@
 
         #result-container {
             display: none;
-            /* Escondido por padrão */
             text-align: center;
         }
 
@@ -172,8 +169,6 @@
                 --border-color: #ced4da;
                 --label-color: #6c757d;
             }
-
-            /* A logo não é mais alterada */
         }
     </style>
 </head>
@@ -226,7 +221,6 @@
     <canvas id="signature-canvas" style="display: none;"></canvas>
 
     <script>
-        // "Banco de Dados" com os endereços em JavaScript.
         const enderecos = {
             'uno': "Av. Pontes Vieira, 2340\nUNO | Medical & Office\nSala 915 - Dionísio Torres, Fortaleza-CE",
             'co': "R. Dragão do Mar, 230\nCentro, Fortaleza - CE, 60060-390",
@@ -270,7 +264,6 @@
 
             // Validação e correção automática do e-mail
             if (atIndex === -1) {
-                // Se não houver @, o e-mail é inválido
                 statusMessage.textContent = 'Por favor, insira um endereço de e-mail válido.';
                 statusMessage.style.color = '#e8491d'; // Cor de erro
                 statusMessage.style.display = 'block';
@@ -332,8 +325,7 @@
                 // E-MAIL
                 ctx.fillText(email, 460, 70);
 
-                // ENDEREÇO (CORRIGIDO)
-                // A cor do texto do endereço agora é branca para contrastar com o fundo azul escuro.
+                // ENDEREÇO
                 ctx.fillStyle = '#FFFFFF';
                 ctx.font = "normal 16px 'Agrandir'";
                 drawMultilineText(endereco, 460, 240);
@@ -350,8 +342,8 @@
             } catch (error) {
                 console.error("Erro ao gerar assinatura:", error);
                 statusMessage.textContent = error.message || 'Ocorreu um erro. Verifique se todos os arquivos (imagens, fonte) estão na pasta correta.';
-                statusMessage.style.color = '#e8491d'; // Cor de erro
-                form.querySelector('button').style.display = 'block'; // Mostra o botão novamente
+                statusMessage.style.color = '#e8491d';
+                form.querySelector('button').style.display = 'block';
             }
         });
     </script>
