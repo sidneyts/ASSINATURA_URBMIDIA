@@ -196,11 +196,6 @@
     <canvas id="signature-canvas" style="display: none;"></canvas>
 
     <script>
-        // --- FATOR DE ESCALA ---
-        // Altere este valor para aumentar ou diminuir todos os elementos proporcionalmente. 
-        // 1.0 = 100% (tamanho padrão), 1.1 = 110% (maior), 0.9 = 90% (menor).
-        const fatorDeEscala = 1.0;
-
         // "Banco de Dados" com os endereços em JavaScript.
         const enderecos = {
             'uno': "Av. Pontes Vieira, 2340\nUNO | Medical & Office\nSala 915 - Dionísio Torres, Fortaleza-CE",
@@ -227,8 +222,9 @@
         }
 
         // Função auxiliar para desenhar texto com múltiplas linhas
-        function drawMultilineText(text, x, y, lineHeight) {
+        function drawMultilineText(text, x, y) {
             const lines = text.split('\n');
+            const lineHeight = 18; // Espaçamento fixo entre as linhas
             lines.forEach((line, index) => {
                 ctx.fillText(line.trim(), x, y + (index * lineHeight));
             });
@@ -245,9 +241,9 @@
 
             try {
                 // Espera que a fonte seja carregada antes de desenhar no canvas.
-                await document.fonts.load("bold 32px 'Agrandir'");
-                await document.fonts.load("normal 14px 'Agrandir'");
-                await document.fonts.load("normal 12px 'Agrandir'");
+                await document.fonts.load("bold 35px 'Agrandir'");
+                await document.fonts.load("normal 17px 'Agrandir'");
+                await document.fonts.load("normal 16px 'Agrandir'");
 
                 // Pega os dados do formulário
                 const nome = document.getElementById('nome').value.toUpperCase();
@@ -265,7 +261,7 @@
 
                 ctx.drawImage(baseImage, 0, 0);
 
-                // --- POSIÇÕES E CORES APLICANDO O FATOR DE ESCALA ---
+                // --- POSIÇÕES E CORES FIXAS ---
 
                 // Define a cor para os textos da parte superior (branca)
                 ctx.fillStyle = '#FFFFFF';
@@ -286,9 +282,9 @@
                 ctx.fillText(email, 460, 70);
 
                 // ENDEREÇO
-                ctx.fillStyle = '#ffffff';
+                ctx.fillStyle = '#FFFFFF';
                 ctx.font = "normal 16px 'Agrandir'";
-                drawMultilineText(endereco, 460, 140);
+                drawMultilineText(endereco, 460, 240);
 
                 // Converte o canvas para uma imagem e mostra o resultado
                 const finalImageURL = canvas.toDataURL('image/png');
