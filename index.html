@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Assinatura - Urbmídia</title>
+    <style>
+        /* Nome do arquivo da fonte atualizado conforme solicitado. */
+        @font-face {
+            font-family: 'Agrandir';
+            src: url('Agrandir-Narrow.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            background-color: #1e1e1e;
+            font-family: 'Agrandir', sans-serif;
+            color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .logo {
+            max-width: 250px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 35px;
+            text-align: left;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 14px;
+            color: #a0a0a0;
+            pointer-events: none;
+        }
+
+        input,
+        select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #555;
+            color: #fff;
+            font-family: 'Agrandir', sans-serif;
+            font-size: 16px;
+            padding: 25px 0 8px 0;
+            outline: none;
+            appearance: none;
+            /* Remove a aparência padrão do select */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        /* Corrige o fundo branco do autofill em navegadores WebKit (Chrome, Safari) */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px #1e1e1e inset !important;
+            -webkit-text-fill-color: #fff !important;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23a0a0a0' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8 10.793 5.354 8.146a.5.5 0 1 0-.708.708l3 3z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 5px center;
+            padding-right: 20px;
+        }
+
+        /* Estilos do botão atualizados conforme solicitado */
+        button {
+            width: 100%;
+            background-color: #0594E6;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Agrandir', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #034e79;
+        }
+
+        #result-container {
+            display: none;
+            /* Escondido por padrão */
+            text-align: center;
+        }
+
+        #signature-image {
+            max-width: 100%;
+            border: 1px solid #444;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        #download-btn {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #28a745;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        #download-btn:hover {
+            background-color: #218838;
+        }
+
+        #status-message {
+            display: none;
+            font-size: 18px;
+            color: #f0f0f0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="form-container">
+            <img src="LOGOMARCA URBMIDIA.png" alt="Logomarca Urbmídia" class="logo">
+            <h1>Preencha os dados</h1>
+            <form id="signature-form">
+                <div class="form-group">
+                    <label for="nome">Seu nome</label>
+                    <input type="text" id="nome" name="nome" placeholder="Nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="cargo">Seu departamento</label>
+                    <input type="text" id="cargo" name="cargo" placeholder="ex: Comercial" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="seueemail@urbmidia.com.br" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX" required>
+                </div>
+                <div class="form-group">
+                    <label for="escritorio">Escritório</label>
+                    <select id="escritorio" name="escritorio" required>
+                        <option value="uno" selected>Escritório Uno Medical e Office</option>
+                        <option value="co">CENTRO DE OPERAÇÕES (C.O.)</option>
+                        <option value="metalurgica">Metalúrgica</option>
+                    </select>
+                </div>
+                <button type="submit">Gerar assinatura &rarr;</button>
+            </form>
+            <p id="status-message">Gerando sua assinatura, aguarde...</p>
+        </div>
+
+        <div id="result-container">
+            <h1>Sua assinatura :)</h1>
+            <img id="signature-image" src="" alt="Assinatura Gerada">
+            <a id="download-btn" href="#" download="minha_assinatura_urbmidia.png">Download</a>
+        </div>
+    </div>
+
+    <!-- O Canvas fica escondido, ele é usado apenas para desenhar a imagem -->
+    <canvas id="signature-canvas" style="display: none;"></canvas>
+
+    <script>
+        // "Banco de Dados" com os endereços em JavaScript.
+        const enderecos = {
+            'uno': "Av. Pontes Vieira, 2340\nUNO | Medical & Office\nSala 915 - Dionísio Torres, Fortaleza-CE",
+            'co': "R. Dragão do Mar, 230\nCentro, Fortaleza - CE, 60060-390",
+            'metalurgica': "Rua Professor Vicente Silveira, 91\nParreão, Fortaleza - CE, 60410-322"
+        };
+
+        const form = document.getElementById('signature-form');
+        const canvas = document.getElementById('signature-canvas');
+        const ctx = canvas.getContext('2d');
+
+        const formContainer = document.getElementById('form-container');
+        const resultContainer = document.getElementById('result-container');
+        const statusMessage = document.getElementById('status-message');
+
+        // Função auxiliar para carregar uma imagem usando Promises (para async/await)
+        function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = () => reject(new Error(`Falha ao carregar a imagem: ${src}. Verifique se o arquivo está na pasta correta.`));
+                img.src = src;
+            });
+        }
+
+        // Função auxiliar para desenhar texto com múltiplas linhas
+        function drawMultilineText(text, x, y) {
+            const lines = text.split('\n');
+            const lineHeight = 18; // Espaçamento entre as linhas ajustado
+            lines.forEach((line, index) => {
+                ctx.fillText(line.trim(), x, y + (index * lineHeight));
+            });
+        }
+
+        // Torna a função do evento 'submit' assíncrona para usar 'await'
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            statusMessage.textContent = 'Gerando sua assinatura, aguarde...';
+            statusMessage.style.color = '#f0f0f0';
+            statusMessage.style.display = 'block';
+            form.querySelector('button').style.display = 'none';
+
+            try {
+                // Espera que a fonte seja carregada antes de desenhar no canvas.
+                await document.fonts.load("bold 32px 'Agrandir'");
+                await document.fonts.load("normal 14px 'Agrandir'");
+                await document.fonts.load("normal 12px 'Agrandir'");
+
+                // Pega os dados do formulário
+                const nome = document.getElementById('nome').value.toUpperCase();
+                const cargo = document.getElementById('cargo').value.toUpperCase();
+                const email = document.getElementById('email').value;
+                const telefone = document.getElementById('telefone').value;
+                const keyEscritorio = document.getElementById('escritorio').value;
+                const endereco = enderecos[keyEscritorio];
+
+                const baseImage = await loadImage('IMAGEM_BASE.png');
+
+                // Define a resolução do canvas para a mesma da imagem base (750x312)
+                canvas.width = baseImage.width;
+                canvas.height = baseImage.height;
+
+                ctx.drawImage(baseImage, 0, 0);
+
+                // --- POSIÇÕES E CORES CORRIGIDAS ---
+
+                // Define a cor para os textos da parte superior (branca)
+                ctx.fillStyle = '#FFFFFF';
+
+                // NOME
+                ctx.font = "bold 35px 'Agrandir'";
+                ctx.fillText(nome, 40, 65);
+
+                // CARGO
+                ctx.font = "normal 17px 'Agrandir'";
+                ctx.fillText(cargo, 42, 90);
+
+                // TELEFONE
+                ctx.font = "normal 16px 'Agrandir'";
+                ctx.fillText(telefone, 460, 50);
+
+                // E-MAIL
+                ctx.fillText(email, 460, 70);
+
+                // ENDEREÇO
+                ctx.fillStyle = '#ffffff';
+                ctx.font = "normal 16px 'Agrandir'";
+                // Desenha o endereço na posição correta
+                drawMultilineText(endereco, 460, 240);
+                
+                // Converte o canvas para uma imagem e mostra o resultado
+                const finalImageURL = canvas.toDataURL('image/png');
+                document.getElementById('signature-image').src = finalImageURL;
+                document.getElementById('download-btn').href = finalImageURL;
+
+                // Esconde o formulário e mostra a imagem gerada
+                formContainer.style.display = 'none';
+                resultContainer.style.display = 'block';
+
+            } catch (error) {
+                console.error("Erro ao gerar assinatura:", error);
+                statusMessage.textContent = error.message || 'Ocorreu um erro. Verifique se todos os arquivos (imagens, fonte) estão na pasta correta.';
+                statusMessage.style.color = '#e8491d'; // Cor de erro
+                form.querySelector('button').style.display = 'block'; // Mostra o botão novamente
+            }
+        });
+    </script>
+
+</body>
+
+</html>
