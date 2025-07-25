@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Assinatura - Urbmídia</title>
     <style>
-        /* Nome do arquivo da fonte atualizado conforme solicitado. */
+        /* Nome do arquivo da fonte e formato atualizados conforme solicitado. */
         @font-face {
             font-family: 'Agrandir';
             src: url('Agrandir-Narrow.otf') format('opentype');
@@ -29,7 +29,8 @@
 
         .container {
             width: 100%;
-            max-width: 450px;
+            /* Aumentado o tamanho máximo do container em ~10% */
+            max-width: 500px;
             text-align: center;
         }
 
@@ -185,7 +186,7 @@
         </div>
 
         <div id="result-container">
-            <h1>Sua assinatura :)</h1>
+            <h1>Sua assinatura :D</h1>
             <img id="signature-image" src="" alt="Assinatura Gerada">
             <a id="download-btn" href="#" download="minha_assinatura_urbmidia.png">Download</a>
         </div>
@@ -266,26 +267,26 @@
                 ctx.fillStyle = '#FFFFFF';
 
                 // NOME
-                ctx.font = "bold 35px 'Agrandir'";
-                ctx.fillText(nome, 40, 65);
+                ctx.font = "bold 32px 'Agrandir'";
+                ctx.fillText(nome, 40, 85);
 
                 // CARGO
-                ctx.font = "normal 17px 'Agrandir'";
-                ctx.fillText(cargo, 42, 90);
+                ctx.font = "normal 14px 'Agrandir'";
+                ctx.fillText(cargo, 42, 118);
 
                 // TELEFONE
-                ctx.font = "normal 16px 'Agrandir'";
-                ctx.fillText(telefone, 460, 50);
+                ctx.font = "normal 14px 'Agrandir'";
+                ctx.fillText(telefone, 480, 85);
 
                 // E-MAIL
-                ctx.fillText(email, 460, 70);
+                ctx.fillText(email, 480, 118);
 
-                // ENDEREÇO
-                ctx.fillStyle = '#ffffff';
-                ctx.font = "normal 16px 'Agrandir'";
+                // ENDEREÇO (cor corrigida para azul escuro para ter contraste)
+                ctx.fillStyle = '#002060';
+                ctx.font = "normal 12px 'Agrandir'";
                 // Desenha o endereço na posição correta
-                drawMultilineText(endereco, 460, 240);
-                
+                drawMultilineText(endereco, 480, 225);
+
                 // Converte o canvas para uma imagem e mostra o resultado
                 const finalImageURL = canvas.toDataURL('image/png');
                 document.getElementById('signature-image').src = finalImageURL;
