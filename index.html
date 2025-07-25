@@ -195,8 +195,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" placeholder="seueemail@urbmidia.com.br" required
-                        pattern=".+@urbmidia\.com\.br$" title="O e-mail deve terminar com @urbmidia.com.br">
+                    <input type="email" id="email" name="email" placeholder="seueemail@urbmidia.com.br" required>
                 </div>
                 <div class="form-group">
                     <label for="telefone">Telefone</label>
@@ -266,15 +265,25 @@
             event.preventDefault();
 
             const emailInput = document.getElementById('email');
+            let emailValue = emailInput.value;
+            const atIndex = emailValue.indexOf('@');
 
-            // Validação do e-mail
-            if (!emailInput.value.toLowerCase().endsWith('@urbmidia.com.br')) {
-                statusMessage.textContent = 'O e-mail deve terminar com @urbmidia.com.br';
+            // Validação e correção automática do e-mail
+            if (atIndex === -1) {
+                // Se não houver @, o e-mail é inválido
+                statusMessage.textContent = 'Por favor, insira um endereço de e-mail válido.';
                 statusMessage.style.color = '#e8491d'; // Cor de erro
                 statusMessage.style.display = 'block';
                 emailInput.focus();
-                return; // Para a execução se o e-mail for inválido
+                return;
             }
+
+            // Pega a parte antes do @ e anexa o domínio correto
+            const localPart = emailValue.substring(0, atIndex);
+            const correctedEmail = localPart + '@urbmidia.com.br';
+
+            // Atualiza o campo no formulário para o usuário ver a correção
+            emailInput.value = correctedEmail;
 
             statusMessage.textContent = 'Gerando sua assinatura, aguarde...';
             statusMessage.style.color = 'var(--text-color)';
@@ -287,7 +296,7 @@
                 await document.fonts.load("normal 17px 'Agrandir'");
                 await document.fonts.load("normal 16px 'Agrandir'");
 
-                // Pega os dados do formulário
+                // Pega os dados do formulário (o e-mail já estará corrigido)
                 const nome = document.getElementById('nome').value.toUpperCase();
                 const cargo = document.getElementById('cargo').value.toUpperCase();
                 const email = document.getElementById('email').value;
