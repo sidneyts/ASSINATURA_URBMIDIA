@@ -29,8 +29,8 @@
 
         .container {
             width: 100%;
-            /* Aumentado o tamanho máximo do container em ~10% */
-            max-width: 500px;
+            /* Aumentado o tamanho máximo do container */
+            max-width: 600px;
             text-align: center;
         }
 
@@ -196,6 +196,11 @@
     <canvas id="signature-canvas" style="display: none;"></canvas>
 
     <script>
+        // --- FATOR DE ESCALA ---
+        // Altere este valor para aumentar ou diminuir todos os elementos proporcionalmente. 
+        // 1.0 = 100% (tamanho padrão), 1.1 = 110% (maior), 0.9 = 90% (menor).
+        const fatorDeEscala = 1.0;
+
         // "Banco de Dados" com os endereços em JavaScript.
         const enderecos = {
             'uno': "Av. Pontes Vieira, 2340\nUNO | Medical & Office\nSala 915 - Dionísio Torres, Fortaleza-CE",
@@ -222,9 +227,8 @@
         }
 
         // Função auxiliar para desenhar texto com múltiplas linhas
-        function drawMultilineText(text, x, y) {
+        function drawMultilineText(text, x, y, lineHeight) {
             const lines = text.split('\n');
-            const lineHeight = 18; // Espaçamento entre as linhas ajustado
             lines.forEach((line, index) => {
                 ctx.fillText(line.trim(), x, y + (index * lineHeight));
             });
@@ -261,31 +265,31 @@
 
                 ctx.drawImage(baseImage, 0, 0);
 
-                // --- POSIÇÕES E CORES CORRIGIDAS ---
+                // --- POSIÇÕES E CORES APLICANDO O FATOR DE ESCALA ---
 
                 // Define a cor para os textos da parte superior (branca)
                 ctx.fillStyle = '#FFFFFF';
 
                 // NOME
-                ctx.font = "bold 32px 'Agrandir'";
-                ctx.fillText(nome, 40, 85);
+                ctx.font = "bold 35px 'Agrandir'";
+                ctx.fillText(nome, 40, 65);
 
                 // CARGO
-                ctx.font = "normal 14px 'Agrandir'";
-                ctx.fillText(cargo, 42, 118);
+                ctx.font = "normal 17px 'Agrandir'";
+                ctx.fillText(cargo, 42, 90);
 
                 // TELEFONE
-                ctx.font = "normal 14px 'Agrandir'";
-                ctx.fillText(telefone, 480, 85);
+                ctx.font = "normal 16px 'Agrandir'";
+                ctx.fillText(telefone, 460, 50);
 
                 // E-MAIL
-                ctx.fillText(email, 480, 118);
+                ctx.fillText(email, 460, 70);
 
                 // ENDEREÇO (cor corrigida para azul escuro para ter contraste)
-                ctx.fillStyle = '#002060';
-                ctx.font = "normal 12px 'Agrandir'";
-                // Desenha o endereço na posição correta
-                drawMultilineText(endereco, 480, 225);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = "normal 16px 'Agrandir'";
+                // Desenha o endereço na posição correta, aplicando a escala também na altura da linha
+                drawMultilineText(endereco, 460, 240);
 
                 // Converte o canvas para uma imagem e mostra o resultado
                 const finalImageURL = canvas.toDataURL('image/png');
