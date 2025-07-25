@@ -14,10 +14,18 @@
             font-style: normal;
         }
 
+        /* Variáveis de Cor para Tema Escuro (Padrão) */
+        :root {
+            --bg-color: #1e1e1e;
+            --text-color: #f0f0f0;
+            --border-color: #555;
+            --label-color: #a0a0a0;
+        }
+
         body {
-            background-color: #1e1e1e;
+            background-color: var(--bg-color);
             font-family: 'Agrandir', sans-serif;
-            color: #f0f0f0;
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,6 +33,7 @@
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
@@ -56,7 +65,7 @@
             top: 0;
             left: 0;
             font-size: 14px;
-            color: #a0a0a0;
+            color: var(--label-color);
             pointer-events: none;
         }
 
@@ -65,8 +74,8 @@
             width: 100%;
             background: transparent;
             border: none;
-            border-bottom: 1px solid #555;
-            color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
             font-family: 'Agrandir', sans-serif;
             font-size: 16px;
             padding: 25px 0 8px 0;
@@ -82,8 +91,8 @@
         input:-webkit-autofill:hover,
         input:-webkit-autofill:focus,
         input:-webkit-autofill:active {
-            -webkit-box-shadow: 0 0 0 30px #1e1e1e inset !important;
-            -webkit-text-fill-color: #fff !important;
+            -webkit-box-shadow: 0 0 0 30px var(--bg-color) inset !important;
+            -webkit-text-fill-color: var(--text-color) !important;
         }
 
         select {
@@ -91,6 +100,12 @@
             background-repeat: no-repeat;
             background-position: right 5px center;
             padding-right: 20px;
+        }
+        
+        /* Estilização do dropdown para tema escuro */
+        select option {
+            background: var(--bg-color);
+            color: var(--text-color);
         }
 
         /* Estilos do botão atualizados conforme solicitado */
@@ -143,8 +158,21 @@
         #status-message {
             display: none;
             font-size: 18px;
-            color: #f0f0f0;
+            color: var(--text-color);
             margin-top: 20px;
+        }
+
+        /* Tema Claro */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-color: #f0f0f0;
+                --text-color: #1e1e1e;
+                --border-color: #cccccc;
+                --label-color: #555;
+            }
+            .logo {
+                filter: invert(1);
+            }
         }
     </style>
 </head>
@@ -166,13 +194,11 @@
                 </div>
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" placeholder="seueemail@urbmidia.com.br" required
-                        pattern=".+@urbmidia\.com\.br$" title="O e-mail deve terminar com @urbmidia.com.br">
+                    <input type="email" id="email" name="email" placeholder="seueemail@urbmidia.com.br" required pattern=".+@urbmidia\.com\.br$" title="O e-mail deve terminar com @urbmidia.com.br">
                 </div>
                 <div class="form-group">
                     <label for="telefone">Telefone</label>
-                    <input type="tel" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX" required
-                        oninput="this.value = this.value.replace(/[^0-9() \-]/g, '')">
+                    <input type="tel" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX" required oninput="this.value = this.value.replace(/[^0-9() \-]/g, '')">
                 </div>
                 <div class="form-group">
                     <label for="escritorio">Escritório</label>
@@ -237,7 +263,7 @@
             event.preventDefault();
 
             const emailInput = document.getElementById('email');
-
+            
             // Validação do e-mail
             if (!emailInput.value.toLowerCase().endsWith('@urbmidia.com.br')) {
                 statusMessage.textContent = 'O e-mail deve terminar com @urbmidia.com.br';
@@ -248,7 +274,7 @@
             }
 
             statusMessage.textContent = 'Gerando sua assinatura, aguarde...';
-            statusMessage.style.color = '#f0f0f0';
+            statusMessage.style.color = 'var(--text-color)';
             statusMessage.style.display = 'block';
             form.querySelector('button').style.display = 'none';
 
