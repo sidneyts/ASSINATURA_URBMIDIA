@@ -166,11 +166,13 @@
                 </div>
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" placeholder="seueemail@urbmidia.com.br" required>
+                    <input type="email" id="email" name="email" placeholder="seueemail@urbmidia.com.br" required
+                        pattern=".+@urbmidia\.com\.br$" title="O e-mail deve terminar com @urbmidia.com.br">
                 </div>
                 <div class="form-group">
                     <label for="telefone">Telefone</label>
-                    <input type="text" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX" required>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX" required
+                        oninput="this.value = this.value.replace(/[^0-9() \-]/g, '')">
                 </div>
                 <div class="form-group">
                     <label for="escritorio">Escritório</label>
@@ -234,6 +236,17 @@
         form.addEventListener('submit', async function (event) {
             event.preventDefault();
 
+            const emailInput = document.getElementById('email');
+
+            // Validação do e-mail
+            if (!emailInput.value.toLowerCase().endsWith('@urbmidia.com.br')) {
+                statusMessage.textContent = 'O e-mail deve terminar com @urbmidia.com.br';
+                statusMessage.style.color = '#e8491d'; // Cor de erro
+                statusMessage.style.display = 'block';
+                emailInput.focus();
+                return; // Para a execução se o e-mail for inválido
+            }
+
             statusMessage.textContent = 'Gerando sua assinatura, aguarde...';
             statusMessage.style.color = '#f0f0f0';
             statusMessage.style.display = 'block';
@@ -281,7 +294,8 @@
                 // E-MAIL
                 ctx.fillText(email, 460, 70);
 
-                // ENDEREÇO
+                // ENDEREÇO (CORRIGIDO)
+                // A cor do texto do endereço agora é branca para contrastar com o fundo azul escuro.
                 ctx.fillStyle = '#FFFFFF';
                 ctx.font = "normal 16px 'Agrandir'";
                 drawMultilineText(endereco, 460, 240);
